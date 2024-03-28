@@ -41,8 +41,6 @@ sed -i -e 's|^minimum-gas-prices =.|minimum-gas-prices = "0.00001ubbn"|' $HOME/.
 sed -i 's|^network =.|network = "signet"|g' $HOME/.babylond/config/app.toml
 
 git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
-PEERS=$"(cat peers.txt)"
-sed -i 's|^persistent_peers =.|persistent_peers = "'$PEERS'"|' $HOME/.babylond/config/config.toml
 
 sudo tee /etc/systemd/system/babylond.service > /dev/null << EOF
 [Unit]
