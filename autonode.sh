@@ -29,7 +29,7 @@ babylond config set client node tcp://localhost:20657
 
 echo -e "Your Node Name"
 read MONIKER
-babylond init $MONIKER --chain-id bbn-test-3
+babylond init "$MONIKER" --chain-id bbn-test-3
 
 curl -L https://snapshots-testnet.nodejumper.io/babylon-testnet/genesis.json > $HOME/.babylond/config/genesis.json
 curl -L https://snapshots-testnet.nodejumper.io/babylon-testnet/addrbook.json > $HOME/.babylond/config/addrbook.json
@@ -39,8 +39,6 @@ sed -i -e 's|^seeds =.|seeds = "8da45f9ff83b4f8dd45bbcb4f850999637fbfe3b@seed0.t
 sed -i -e 's|^minimum-gas-prices =.|minimum-gas-prices = "0.00001ubbn"|' $HOME/.babylond/config/app.toml
 
 sed -i 's|^network =.|network = "signet"|g' $HOME/.babylond/config/app.toml
-
-curl "https://snapshots-testnet.nodejumper.io/babylon-testnet/babylon-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.babylond"
 
 sudo tee /etc/systemd/system/babylond.service > /dev/null << EOF
 [Unit]
