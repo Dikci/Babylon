@@ -46,6 +46,54 @@ sed -i \
 
 sed -i 's|^network *=.*|network = "signet"|g' $HOME/.babylond/config/app.toml
 
+#CHECK PORTS
+PORT=333
+if ss -tulpen | awk '{print $5}' | grep -q ":26656$" ; then
+    echo -e "\e[31mPort 26656 already in use.\e[39m"
+    sleep 2
+    sed -i -e "s|:26656\"|:${PORT}56\"|g" $DAEMON_HOME/config/config.toml
+    echo -e "\n\e[42mPort 26656 changed to ${PORT}56.\e[0m\n"
+    sleep 2
+fi
+if ss -tulpen | awk '{print $5}' | grep -q ":26657$" ; then
+    echo -e "\e[31mPort 26657 already in use\e[39m"
+    sleep 2
+    sed -i -e "s|:26657\"|:${PORT}57\"|" $DAEMON_HOME/config/config.toml
+    echo -e "\n\e[42mPort 26657 changed to ${PORT}57.\e[0m\n"
+    sleep 2
+    $DAEMON_NAME config set client node tcp://localhost:${PORT}57
+fi
+if ss -tulpen | awk '{print $5}' | grep -q ":26658$" ; then
+    echo -e "\e[31mPort 26658 already in use.\e[39m"
+    sleep 2
+    sed -i -e "s|:26658\"|:${PORT}58\"|" $DAEMON_HOME/config/config.toml
+    echo -e "\n\e[42mPort 26658 changed to ${PORT}58.\e[0m\n"
+    sleep 2
+fi
+if ss -tulpen | awk '{print $5}' | grep -q ":6060$" ; then
+    echo -e "\e[31mPort 6060 already in use.\e[39m"
+    sleep 2
+    sed -i -e "s|:6060\"|:${PORT}60\"|" $DAEMON_HOME/config/config.toml
+    echo -e "\n\e[42mPort 6060 changed to ${PORT}60.\e[0m\n"
+    sleep 2
+fi
+if ss -tulpen | awk '{print $5}' | grep -q ":1317$" ; then
+    echo -e "\e[31mPort 1317 already in use.\e[39m"
+    sleep 2
+    sed -i -e "s|:1317\"|:${PORT}17\"|" $DAEMON_HOME/config/config.toml
+    echo -e "\n\e[42mPort 1317 changed to ${PORT}17.\e[0m\n"
+    sleep 2
+fi
+if ss -tulpen | awk '{print $5}' | grep -q ":9090$" ; then
+    echo -e "\e[31mPort 9090 already in use.\e[39m"
+    sleep 2
+    sed -i -e "s|:9090\"|:${PORT}90\"|" $DAEMON_HOME/config/config.toml
+    echo -e "\n\e[42mPort 9090 changed to ${PORT}90.\e[0m\n"
+    sleep 2
+fi
+
+curl "https://snapshots-testnet.nodejumper.io/babylon-testnet/babylon-testnet_latest.tar.lz4" | lz4 -dc - | tar -xf - -C "$HOME/.babylond"
+
 sudo tee /etc/systemd/system/babylond.service > /dev/null << EOF
 [Unit]
 Description=Babylon node service
