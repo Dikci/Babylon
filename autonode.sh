@@ -69,5 +69,3 @@ git clone https://github.com/Wrevart/wertotg && wget https://raw.githubuserconte
 
 sudo systemctl restart babylond
 sudo journalctl -u babylond -f --no-hostname -o cat
-
-j
