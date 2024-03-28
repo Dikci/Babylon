@@ -38,12 +38,6 @@ sed -i -e 's|^seeds =.|seeds = "8da45f9ff83b4f8dd45bbcb4f850999637fbfe3b@seed0.t
 
 sed -i -e 's|^minimum-gas-prices =.|minimum-gas-prices = "0.00001ubbn"|' $HOME/.babylond/config/app.toml
 
-sed -i
--e 's|^pruning =.|pruning = "custom"|'
--e 's|^pruning-keep-recent =.|pruning-keep-recent = "100"|'
--e 's|^pruning-interval =.|pruning-interval = "17"|'
-$HOME/.babylond/config/app.toml
-
 sed -i 's|^network =.|network = "signet"|g' $HOME/.babylond/config/app.toml
 
 git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
