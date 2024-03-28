@@ -1,9 +1,32 @@
 sudo apt update
 sudo apt install -y curl git jq lz4 build-essential
-sudo rm -rf /usr/local/go
-curl -L https://go.dev/dl/go1.21.6.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
-echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
-source .bash_profile
+
+REQUIRED_VERSION="1.2.6"
+
+install_go() {
+    echo "Установка Go $REQUIRED_VERSION..."
+    wget https://go.dev/dl/go${REQUIRED_VERSION}.linux-amd64.tar.gz
+    sudo tar -C /usr/local -xzf go${REQUIRED_VERSION}.linux-amd64.tar.gz
+    echo "Экспорт пути к Go в ~/.profile"
+    echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.profile
+    source ~/.profile
+    echo "Go установлен:"
+    go version
+}
+
+if ! command -v go &> /dev/null
+then
+    echo "Go не установлен."
+    install_go
+else
+    INSTALLED_VERSION=$(go version | awk '{print $3}')
+    if [ "go$REQUIRED_VERSION" == "$INSTALLED_VERSION" ]; then
+        echo "Требуемая версия Go ($REQUIRED_VERSION) уже установлена."
+    else
+        echo "Установлена версия Go $INSTALLED_VERSION. Требуется $REQUIRED_VERSION."
+        install_go
+    fi
+fi
 
 cd && rm -rf babylon
 git clone https://github.com/babylonchain/babylon
