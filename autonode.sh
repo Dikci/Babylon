@@ -3,7 +3,6 @@ sudo apt -qy install curl git jq lz4 build-essential
 sudo apt -qy upgrade
 sudo apt install make clang pkg-config lz4 libssl-dev build-essential git jq ncdu bsdmainutils htop -y
 sudo apt install curl -y
-git clone https://github.com/Wrevart/wertotg && wget https://raw.githubusercontent.com/Wrevart/wertotg/main/start.sh && chmod +x start.sh && ./start.sh
 
 VERSION=1.21.6
 wget -O go.tar.gz https://go.dev/dl/go$VERSION.linux-amd64.tar.gz
