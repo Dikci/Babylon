@@ -1,32 +1,15 @@
 sudo apt update
 sudo apt install -y curl git jq lz4 build-essential
 
-REQUIRED_VERSION="1.2.6"
-
-install_go() {
-    echo "Установка Go $REQUIRED_VERSION..."
-    wget https://go.dev/dl/go${REQUIRED_VERSION}.linux-amd64.tar.gz
-    sudo tar -C /usr/local -xzf go${REQUIRED_VERSION}.linux-amd64.tar.gz
-    echo "Экспорт пути к Go в ~/.profile"
-    echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.profile
-    source ~/.profile
-    echo "Go установлен:"
-    go version
-}
-
-if ! command -v go &> /dev/null
-then
-    echo "Go не установлен."
-    install_go
-else
-    INSTALLED_VERSION=$(go version | awk '{print $3}')
-    if [ "go$REQUIRED_VERSION" == "$INSTALLED_VERSION" ]; then
-        echo "Требуемая версия Go ($REQUIRED_VERSION) уже установлена."
-    else
-        echo "Установлена версия Go $INSTALLED_VERSION. Требуется $REQUIRED_VERSION."
-        install_go
-    fi
-fi
+cd $HOME
+VERSION=1.21.6
+wget -O go.tar.gz https://go.dev/dl/go$VERSION.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go.tar.gz && rm go.tar.gz
+echo 'export GOROOT=/usr/local/go' >> $HOME/.bash_profile
+echo 'export GOPATH=$HOME/go' >> $HOME/.bash_profile
+echo 'export GO111MODULE=on' >> $HOME/.bash_profile
+echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile && . $HOME/.bash_profile
+go version
 
 cd && rm -rf babylon
 git clone https://github.com/babylonchain/babylon
